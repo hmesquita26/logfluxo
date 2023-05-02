@@ -3,6 +3,9 @@ package com.msr.logfluxo.domain.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -34,10 +37,14 @@ public class Entrega {
 	
 	private BigDecimal taxa;
 	
+	@JsonProperty(access = Access.READ_ONLY)
 	@Enumerated(EnumType.STRING)
 	private StatusEntrega status;
 	
+	@JsonProperty(access = Access.READ_ONLY)
 	private LocalDateTime dataPedido;
+	
+	@JsonProperty(access = Access.READ_ONLY)
 	private LocalDateTime dataFinalizacao;
 	
 }
