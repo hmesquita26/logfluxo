@@ -9,4 +9,5 @@ import lombok.Getter;
 public class NegocioException extends RuntimeException{
 	
 	private String mensagem;
+
 }
