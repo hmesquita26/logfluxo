@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import com.msr.logfluxo.api.model.EntregaModel;
+import com.msr.logfluxo.api.model.request.EntregaRequest;
 import com.msr.logfluxo.domain.model.Entrega;
 
 import lombok.AllArgsConstructor;
@@ -25,5 +26,9 @@ public class EntregaMapper {
 		return entregas.stream()
 				.map(this::toModel)
 				.collect(Collectors.toList());
+	}
+	
+	public Entrega toEntity(EntregaRequest entregaRequest) {
+		return modelMapper.map(entregaRequest, Entrega.class);
 	}
 }
