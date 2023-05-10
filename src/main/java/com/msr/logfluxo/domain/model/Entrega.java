@@ -2,9 +2,8 @@ package com.msr.logfluxo.domain.model;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -14,14 +13,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.groups.ConvertGroup;
-import jakarta.validation.groups.Default;
+import jakarta.persistence.OneToMany;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import validations.ValidationGroups;
 
 @Getter
 @Setter
@@ -47,5 +42,8 @@ public class Entrega {
 	private OffsetDateTime dataPedido;
 	
 	private OffsetDateTime dataFinalizacao;
+	
+	@OneToMany(mappedBy = "entrega")
+	private List<Ocorrencia> ocorrencias = new ArrayList<>();
 	
 }
