@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.msr.logfluxo.api.mapper.EntregaMapper;
 import com.msr.logfluxo.api.model.EntregaModel;
+import com.msr.logfluxo.api.model.request.EntregaRequest;
 import com.msr.logfluxo.domain.model.Entrega;
 import com.msr.logfluxo.domain.repository.EntregaRepository;
 import com.msr.logfluxo.domain.service.SolicitacaoEntregaService;
@@ -32,8 +33,9 @@ public class EntregaController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public EntregaModel solicitar(@Valid @RequestBody Entrega entrega) {
-		Entrega entregaSolicitada = solicitacaoEntregaService.solicitar(entrega);
+	public EntregaModel solicitar(@Valid @RequestBody EntregaRequest entregaRequest) {
+		Entrega novaEntrega = entregaMapper.toEntity(entregaRequest);
+		Entrega entregaSolicitada = solicitacaoEntregaService.solicitar(novaEntrega);
 		return entregaMapper.toModel(entregaSolicitada);
 	}
 	
