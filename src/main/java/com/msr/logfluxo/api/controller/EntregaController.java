@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.msr.logfluxo.api.mapper.EntregaMapper;
+import com.msr.logfluxo.api.model.EntregaModel;
 import com.msr.logfluxo.domain.model.Entrega;
 import com.msr.logfluxo.domain.repository.EntregaRepository;
 import com.msr.logfluxo.domain.service.SolicitacaoEntregaService;
@@ -26,22 +28,24 @@ public class EntregaController {
 
 	private EntregaRepository entregaRepository;
 	private SolicitacaoEntregaService solicitacaoEntregaService;
+	private EntregaMapper entregaMapper;
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Entrega solicitar(@Valid @RequestBody Entrega entrega) {
-		return solicitacaoEntregaService.solicitar(entrega);
+	public EntregaModel solicitar(@Valid @RequestBody Entrega entrega) {
+		Entrega entregaSolicitada = solicitacaoEntregaService.solicitar(entrega);
+		return entregaMapper.toModel(entregaSolicitada);
 	}
 	
 	@GetMapping
-	public List<Entrega> listar() {
-		return entregaRepository.findAll();
+	public List<EntregaModel> listar() {
+		return entregaMapper.toCollectionModel(entregaRepository.findAll());
 	}
 	
 	@GetMapping("/{entregaId}")
-	public ResponseEntity<Entrega> buscar(@PathVariable Long entregaId) {
+	public ResponseEntity<EntregaModel> buscar(@PathVariable Long entregaId) {
 		return entregaRepository.findById(entregaId)
-				.map(ResponseEntity::ok)
+				.map(entrega -> ResponseEntity.ok(entregaMapper.toModel(entrega)))
 				.orElse(ResponseEntity.notFound().build());
 	}
 }
