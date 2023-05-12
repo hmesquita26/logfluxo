@@ -2,7 +2,7 @@ package com.msr.logfluxo.domain.service;
 
 import org.springframework.stereotype.Service;
 
-import com.msr.logfluxo.domain.exception.NegocioException;
+import com.msr.logfluxo.domain.exception.EntidadeNaoEncontradaException;
 import com.msr.logfluxo.domain.model.Entrega;
 import com.msr.logfluxo.domain.repository.EntregaRepository;
 
@@ -16,6 +16,6 @@ public class BuscaEntregaService {
 	
 	public Entrega buscar(Long entregaId) {
 		return entregaRepository.findById(entregaId)
-				.orElseThrow(() -> new NegocioException("Entrega não encontrada"));
+				.orElseThrow(() -> new EntidadeNaoEncontradaException("Entrega não encontrada"));
 	}
 }
