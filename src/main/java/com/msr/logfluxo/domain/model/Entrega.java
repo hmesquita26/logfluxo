@@ -5,6 +5,7 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -43,7 +44,7 @@ public class Entrega {
 	
 	private OffsetDateTime dataFinalizacao;
 	
-	@OneToMany(mappedBy = "entrega")
+	@OneToMany(mappedBy = "entrega", cascade = CascadeType.ALL)
 	private List<Ocorrencia> ocorrencias = new ArrayList<>();
 
 	public Ocorrencia adicionarOcorrencia(String descricao) {
